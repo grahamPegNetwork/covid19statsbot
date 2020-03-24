@@ -6,7 +6,13 @@ const bot = new Telegraf(process.env['TELEGRAM_BOT_TOKEN']);
 const quickstart = `Hello and welcome to the COVID-19 Stats Bot!
 *Usage*
 /global Returns current global stats
-/country <country name> Returns country specific stats`;
+/country <country name> Returns country specific stats
+
+Questions, comments? Drop by t.me/c19stats`;
+
+const newUser = (ctx) => {
+  ctx.telegram.sendMessage(process.env.TELEGRAM_ADMIN, "New User @" + ctx.update.message.from.username + " (ID: " + ctx.update.message.from.id + ")")
+}
 
 const getGlobalStats = async() => {
   const stats = await fetch(`https://corona.lmao.ninja/all`);
@@ -52,6 +58,6 @@ Infection Rate: ${country.casesPerOneMillion/10000}%`;
   ctx.reply(message, {parse_mode: "markdown"})
 })
 bot.command('county', async(ctx) => ctx.reply("Did you mean to type '/country'?"));
-bot.start((ctx) => ctx.reply(quickstart, {parse_mode: "markdown"}));
+bot.start((ctx) => {newUser(ctx); ctx.reply(quickstart, {parse_mode: "markdown"})});
 bot.help((ctx) => ctx.reply(quickstart, {parse_mode: "markdown"}));
 bot.launch();
