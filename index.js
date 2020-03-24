@@ -51,6 +51,7 @@ Infection Rate: ${country.casesPerOneMillion/10000}%`;
   }
   ctx.reply(message, {parse_mode: "markdown"})
 })
+bot.command('county', async(ctx) => ctx.reply("Did you mean to type '/country'?"));
 bot.start((ctx) => ctx.reply(quickstart, {parse_mode: "markdown"}));
 bot.help((ctx) => ctx.reply(quickstart, {parse_mode: "markdown"}));
 bot.launch();
