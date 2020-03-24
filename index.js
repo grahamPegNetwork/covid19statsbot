@@ -27,6 +27,7 @@ const getCountryStats = async(country) => {
   }
 }
 bot.command('global', async(ctx) => {
+  console.log("/global: " +ctx.update.message.from.first_name)
   var stats = await getGlobalStats();
   var updated = new Date(stats.updated * 1000);
   var message = `*Global Stats*
@@ -42,6 +43,7 @@ ${updated}
 bot.command('country', async(ctx) => {
   var country = await getCountryStats(ctx.message.text.substring(9));
   if (!country.error) {
+    console.log("/country " + country.country + ": " +ctx.update.message.from.first_name)
     var message = `*Country*: ${country.country}
 *Daily Stats*
 New Cases: ${country.todayCases}
